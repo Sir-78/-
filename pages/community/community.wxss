@@ -1,0 +1,146 @@
+.container {
+  padding: 20rpx;
+}
+
+.header {
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  display: block;
+}
+
+.subtitle {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+  margin-top: 10rpx;
+}
+
+.new-post-btn {
+  background: linear-gradient(135deg, #6EE7F9 0%, #33CC99 100%);
+  color: #fff;
+  padding: 20rpx 0;
+  text-align: center;
+  border-radius: 10rpx;
+  margin-bottom: 30rpx;
+  font-size: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(51, 204, 153, 0.3);
+  transition: all 0.3s ease;
+}
+
+.new-post-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 12rpx 32rpx rgba(51, 204, 153, 0.4);
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-item {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  animation: fade-in-up 400ms ease both;
+}
+
+.post-item:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.12);
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(10rpx); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.post-time {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 5rpx;
+}
+
+.post-content {
+  font-size: 28rpx;
+  line-height: 1.5;
+  margin-bottom: 20rpx;
+}
+
+.post-images {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20rpx;
+}
+
+.post-image {
+  width: 220rpx;
+  height: 220rpx;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+  border-radius: 8rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.single-image {
+  width: 450rpx;
+  height: 300rpx;
+}
+
+.post-image:active {
+  transform: scale(0.98);
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.12);
+}
+
+.post-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1rpx solid #eee;
+  padding-top: 15rpx;
+}
+
+.interaction {
+  display: flex;
+}
+
+.like, .comment {
+  display: flex;
+  align-items: center;
+  margin-left: 30rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.icon {
+  margin-right: 10rpx;
+}

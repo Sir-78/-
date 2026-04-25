@@ -1,0 +1,98 @@
+<view class="container">
+  <!-- 加载状态 -->
+  <view class="loading-mask" wx:if="{{isLoading}}">
+    <view class="loading-spinner"></view>
+  </view>
+  <!-- 数据摘要 -->
+  <view class="data-summary">
+    <view class="summary-item">
+      <text class="summary-value">{{totalRoutes || '0'}}</text>
+      <text class="summary-label">总路线数</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-value">{{totalBookings || '0'}}</text>
+      <text class="summary-label">总预约数</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-value">{{completedBookings || '0'}}</text>
+      <text class="summary-label">已完成预约</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-value">{{averageRating || '0.0'}}</text>
+      <text class="summary-label">平均评分</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-value">{{totalPosts || '0'}}</text>
+      <text class="summary-label">帖子数量</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-value">{{pointsDelta || '0'}}</text>
+      <text class="summary-label">积分变动</text>
+    </view>
+  </view>
+
+  <!-- 时间筛选器 -->
+  <view class="filter-section">
+    <text class="filter-label">时间范围：</text>
+    <view class="filter-options">
+      <view class="filter-option {{timeFilter === 'week' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="week">本周</view>
+      <view class="filter-option {{timeFilter === 'day' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="day">本日</view>
+      <view class="filter-option {{timeFilter === 'month' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="month">本月</view>
+      <view class="filter-option {{timeFilter === 'year' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="year">本年</view>
+      <view class="filter-option {{timeFilter === 'all' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="all">全部</view>
+      <view class="filter-option {{timeFilter === 'custom' ? 'active' : ''}}" bindtap="setTimeFilter" data-filter="custom">自定义</view>
+    </view>
+    <view wx:if="{{timeFilter === 'custom'}}" class="custom-range">
+      <picker mode="date" value="{{customStartDate}}" bindchange="setCustomStartDate">
+        <view class="custom-picker">开始：{{customStartDate || '请选择'}}</view>
+      </picker>
+      <picker mode="date" value="{{customEndDate}}" bindchange="setCustomEndDate">
+        <view class="custom-picker">结束：{{customEndDate || '请选择'}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 路线预约统计图表 -->
+  <view class="chart-card">
+    <text class="chart-title">路线预约统计</text>
+    <text class="chart-description">展示各路线的预约数量分布</text>
+      <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{bookingEc}}"></ec-canvas>
+    <view wx:if="{{routeBookingData.length === 0}}" class="empty-chart">
+      <text>暂无预约数据</text>
+    </view>
+  </view>
+
+  <!-- 路线类别分布图表 -->
+  <view class="chart-card">
+    <text class="chart-title">路线类别分布</text>
+    <text class="chart-description">展示不同类别路线的占比</text>
+      <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{categoryEc}}"></ec-canvas>
+    <view wx:if="{{routeCategoryData.length === 0}}" class="empty-chart">
+      <text>暂无类别数据</text>
+    </view>
+    <view class="legend">
+      <view class="legend-item" wx:for="{{pieChartLegend}}" wx:key="name">
+        <view class="legend-color" style="background-color: {{item.color}}"></view>
+        <text class="legend-text">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 热门路线排行 -->
+  <view class="chart-card">
+    <text class="chart-title">热门路线排行</text>
+    <view class="list" wx:if="{{popularRoutes.length > 0}}">
+      <view class="list-item" wx:for="{{popularRoutes}}" wx:key="id" bindtap="goToRouteDetail" data-id="{{item.id}}">
+        <view class="flex align-center">
+          <text class="rank-number {{index < 3 ? 'top-rank' : ''}}">{{index + 1}}</text>
+          <text class="route-name">{{item.name}}</text>
+        </view>
+        <text class="booking-count">{{item.bookingCount || item.count}}人预约</text>
+      </view>
+    </view>
+    <view wx:else class="empty-list">
+      <text>暂无热门路线数据</text>
+    </view>
+  </view>
+  
+</view>

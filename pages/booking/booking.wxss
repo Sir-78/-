@@ -1,0 +1,161 @@
+/* pages/booking/booking.wxss */
+
+.container {
+  padding: 20rpx;
+  background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 50%, #FFF5F7 100%);
+}
+
+/* 路线信息样式 */
+.route-info {
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  animation: fade-in-up 400ms ease both;
+}
+
+.route-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: var(--text-color-light);
+  margin: 10rpx 0 20rpx;
+}
+
+.route-description {
+  font-size: 28rpx;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* 预约表单样式 */
+.booking-form {
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  animation: fade-in-up 400ms ease both;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-color);
+  margin-bottom: 10rpx;
+}
+
+.picker {
+  height: 80rpx;
+  border: 1px solid var(--border-color);
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: var(--text-color);
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.04);
+}
+
+.picker-arrow {
+  font-size: 24rpx;
+  color: var(--text-color-lighter);
+}
+
+/* 人数选择器样式 */
+.number-picker {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+}
+
+.number-btn {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  font-size: 36rpx;
+  font-weight: bold;
+  border-radius: 8rpx;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.number-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.12);
+}
+
+.number-btn.disabled {
+  background-color: #f1f1f1;
+  color: #cccccc;
+}
+
+.number-value {
+  width: 100rpx;
+  text-align: center;
+  font-size: 32rpx;
+  color: var(--text-color);
+}
+
+/* 费用信息样式 */
+.price-info {
+  margin-bottom: 30rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 16rpx 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  animation: fade-in-up 400ms ease both;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15rpx 0;
+  font-size: 28rpx;
+  color: var(--text-color);
+}
+
+.price-item.total {
+  font-weight: bold;
+  font-size: 32rpx;
+}
+
+.total-price {
+  color: var(--accent-color);
+  font-size: 36rpx;
+}
+
+/* 提交按钮样式 */
+.submit-section {
+  padding: 30rpx 0;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  background: linear-gradient(135deg, #6EE7F9 0%, #33CC99 100%);
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 45rpx;
+  font-weight: bold;
+  box-shadow: 0 6rpx 10rpx rgba(7, 193, 96, 0.2);
+  transition: all 0.3s ease;
+}
+.submit-btn:active {
+  transform: scale(0.99);
+  box-shadow: 0 12rpx 32rpx rgba(51, 204, 153, 0.3);
+}
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(10rpx); }
+  100% { opacity: 1; transform: translateY(0); }
+}

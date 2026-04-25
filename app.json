@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/route-overview/route-overview",
+    "pages/routeDetail/routeDetail",
+    "pages/booking/booking",
+    "pages/community/community",
+    "pages/post/post",
+    "pages/statistics/statistics",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "navigationBarTitleText": "宁高旅",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1AAD19",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tabbar/home.jpg",
+        "selectedIconPath": "images/tabbar/home_selected.jpg"
+      },
+      {
+        "pagePath": "pages/route-overview/route-overview",
+        "text": "路线",
+        "iconPath": "images/tabbar/route.jpg",
+        "selectedIconPath": "images/tabbar/route_selected.jpg"
+      },
+      {
+        "pagePath": "pages/community/community",
+        "text": "社区",
+        "iconPath": "images/tabbar/community.jpg",
+        "selectedIconPath": "images/tabbar/community_selected.jpg"
+      },
+      {
+        "pagePath": "pages/statistics/statistics",
+        "text": "统计",
+        "iconPath": "images/tabbar/statistics.jpg",
+        "selectedIconPath": "images/tabbar/statistics_selected.jpg"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tabbar/profile.jpg",
+        "selectedIconPath": "images/tabbar/profile_selected.jpg"
+      }
+    ]
+  }
+}

@@ -1,0 +1,133 @@
+<view class="container">
+  <!-- 查看帖子模式 -->
+  <block wx:if="{{mode === 'view' && post}}">
+    <view class="post-detail">
+      <view class="post-header">
+        <image class="avatar" src="{{post.avatar}}"></image>
+        <view class="user-info">
+          <text class="username">{{post.author}}</text>
+          <text class="post-time">{{post.time}}</text>
+        </view>
+      </view>
+      
+      <view class="post-content">
+        <text>{{post.content}}</text>
+      </view>
+      
+      <view class="post-images" wx:if="{{post.images.length > 0}}">
+        <image 
+          wx:for="{{post.images}}" 
+          wx:for-item="image" 
+          wx:key="*this" 
+          src="{{image}}" 
+          mode="aspectFill"
+          class="post-image {{post.images.length == 1 ? 'single-image' : ''}}"
+          bindtap="previewImage"
+          data-src="{{image}}"
+        ></image>
+      </view>
+      
+      <view class="post-footer">
+        <view class="interaction">
+          <view class="like" bindtap="likePost">
+            <text class="icon">👍</text>
+            <text class="count">{{post.likes}}</text>
+          </view>
+          <view class="comment">
+            <text class="icon">💬</text>
+            <text class="count">{{post.comments.length}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 评论列表 -->
+      <view class="comments-section">
+        <text class="section-title">评论 ({{comments.length}})</text>
+        <view wx:if="{{isLoadingComments}}" class="loading-comments">评论加载中...</view>
+        <view wx:elif="{{comments.length === 0}}" class="no-comments">暂无评论，快来抢沙发吧！</view>
+        <view class="comment-list" wx:else>
+          <view class="comment-item" wx:for="{{comments}}" wx:key="_id">
+            <image class="comment-avatar" src="{{item.authorInfo.avatarUrl || '/images/avatars/default-avatar.png'}}"></image>
+            <view class="comment-content-wrapper">
+              <view class="comment-author-line">
+                <text class="comment-username">{{item.authorInfo.nickName || '匿名用户'}}</text>
+                <text class="comment-time">{{item.formattedCreateTime}}</text>
+              </view>
+              <text class="comment-text">{{item.content}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 评论输入区 -->
+      <view class="comment-input-area">
+        <input 
+          class="comment-input" 
+          placeholder="友善评论..." 
+          value="{{commentInputValue}}" 
+          bindinput="onCommentInput" 
+          confirm-type="send" 
+          bindconfirm="submitComment"
+          maxlength="200"
+          adjust-position="{{false}}"
+          />
+        <button 
+          class="comment-submit-btn" 
+          bindtap="submitComment" 
+          disabled="{{!commentInputValue.trim() || submittingComment}}"
+          loading="{{submittingComment}}"
+        >发送</button>
+      </view>
+    </view>
+  </block>
+                                                                                 
+  <!-- 发布新帖或编辑帖子模式 -->
+  <block wx:if="{{mode === 'new' || mode === 'edit'}}">
+    <view class="new-post">
+      <view class="form-item">
+        <textarea 
+          placeholder="分享您的旅行体验..."
+          bindinput="onContentInput"
+          value="{{newPostContent}}"
+          class="content-input"
+        ></textarea>
+      </view>
+      
+      <view class="form-item">
+        <view class="image-list">
+          <view 
+            class="image-item" 
+            wx:for="{{newPostImages}}" 
+            wx:key="*this"
+          >
+            <image src="{{item}}" mode="aspectFill" class="preview-image"></image>
+            <view class="remove-btn" bindtap="removeImage" data-index="{{index}}">×</view>
+          </view>
+          
+          <view class="add-image-btn" bindtap="chooseImage" wx:if="{{newPostImages.length < 9}}">
+            <text class="add-icon">+</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="form-item location-picker">
+        <view class="location-label">地理位置:</view>
+        <view class="location-text {{currentLocation ? 'selected' : ''}}" bindtap="chooseLocation">
+          {{locationText}}
+        </view>
+        <button size="mini" bindtap="getLocation" class="location-btn" wx:if="{{!currentLocation}}">自动定位</button>
+        <button size="mini" bindtap="clearLocation" class="location-btn clear" wx:if="{{currentLocation}}">清除位置</button>
+      </view>
+
+      <button class="submit-btn" bindtap="submitPost">{{mode === 'edit' ? '更新帖子' : '发布帖子'}}</button>
+    </view>
+  </block>
+
+  <!-- 编辑和删除按钮，仅在查看模式且为作者时显示 -->
+  <block wx:if="{{mode === 'view' && post && post._openid === myOpenId}}">
+    <view class="action-buttons">
+      <button class="edit-btn" bindtap="editPost">编辑</button>
+      <button class="delete-btn" bindtap="deletePost">删除</button>
+    </view>
+  </block>
+</view>

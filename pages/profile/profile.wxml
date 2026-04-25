@@ -1,0 +1,123 @@
+<!--pages/profile/profile.wxml-->
+<view class="container">
+  <!-- 顶部标题栏 -->
+  <view class="header">
+    <text class="header-title">个人中心</text>
+  </view>
+
+  <!-- 用户信息区域 -->
+  <view class="user-info-section">
+    <block wx:if="{{hasUserInfo}}">
+      <view class="user-avatar-container">
+        <image class="user-avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      </view>
+      <view class="user-details">
+        <text class="user-nickname">{{userInfo.nickName}}</text>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="login-placeholder">
+        <text class="login-text">请登录</text>
+        <button class="login-btn" bindtap="login">登录</button>
+      </view>
+    </block>
+  </view>
+
+  <!-- 数据统计区域 -->
+  <view class="stats-section">
+    <view class="stat-item">
+      <text class="stat-value">{{userStats.coupons || 0}}</text>
+      <text class="stat-label">优惠券</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value">{{userStats.favorites || 0}}</text>
+      <text class="stat-label">收藏</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value">{{userStats.messages || 0}}</text>
+      <text class="stat-label">消息</text>
+    </view>
+    <view class="stat-add">
+      <text class="iconfont icon-add">+</text>
+    </view>
+  </view>
+
+  <!-- 订单区域 -->
+  <view class="orders-section">
+    <view class="order-card scenic">
+      <view class="order-title">景点订单</view>
+      <view class="order-count">个订单</view>
+      <view class="view-btn">查看</view>
+    </view>
+    <view class="order-card travel">
+      <view class="order-title">旅游订单</view>
+      <view class="order-count">个订单</view>
+      <view class="view-btn">查看</view>
+    </view>
+  </view>
+
+  <!-- 服务区域 -->
+  <view class="services-section">
+    <view class="section-title">我的服务</view>
+    <view class="services-grid">
+      <view class="service-item" bindtap="navigateTo" data-url="/pages/wallet/wallet">
+        <view class="service-icon money">¥</view>
+        <text class="service-name">我的佣金</text>
+      </view>
+      <view class="service-item" bindtap="navigateTo" data-url="/pages/travel/travel">
+        <view class="service-icon travel">行</view>
+        <text class="service-name">出行人</text>
+      </view>
+      <view class="service-item" bindtap="navigateTo" data-url="/pages/invite/invite">
+        <view class="service-icon invite">邀</view>
+        <text class="service-name">邀请好友</text>
+      </view>
+      <view class="service-item" bindtap="navigateTo" data-url="/pages/faq/faq">
+        <view class="service-icon faq">?</view>
+        <text class="service-name">常见问题</text>
+      </view>
+      <view class="service-item" bindtap="navigateTo" data-url="/pages/privacy/privacy">
+        <view class="service-icon privacy">隐</view>
+        <text class="service-name">隐私协议</text>
+      </view>
+      <view class="service-item" bindtap="openContact">
+        <view class="service-icon service">客</view>
+        <text class="service-name">我的客服</text>
+      </view>
+      <view class="service-item" bindtap="logout">
+        <view class="service-icon logout">退</view>
+        <text class="service-name">退出登录</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置选项 -->
+  <view class="settings-section">
+    <view class="settings-item" bindtap="navigateTo" data-url="/pages/settings/settings">
+      <text class="settings-icon">⚙️</text>
+      <text class="settings-text">设置</text>
+      <text class="settings-arrow">></text>
+    </view>
+    <view class="settings-item" bindtap="openContact">
+      <text class="settings-icon">📞</text>
+      <text class="settings-text">联系客服</text>
+      <text class="settings-arrow">></text>
+    </view>
+    <view class="settings-item" bindtap="navigateTo" data-url="/pages/help/help">
+      <text class="settings-icon">❓</text>
+      <text class="settings-text">帮助中心</text>
+      <text class="settings-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 底部版本信息 -->
+  <view class="footer">
+    <text class="version">宁高旅 v1.0.0</text>
+  </view>
+  
+  
+  <!-- 加载中提示 -->
+  <view class="loading-mask" wx:if="{{isLoading}}">
+    <view class="loading-spinner"></view>
+  </view>
+</view>

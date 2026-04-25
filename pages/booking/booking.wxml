@@ -1,0 +1,80 @@
+<!--pages/booking/booking.wxml-->
+<view class="container">
+  <!-- 路线信息 -->
+  <view class="route-info card">
+    <text class="title">{{routeInfo.name}}</text>
+    <view class="route-meta">
+      <text class="route-city">所属城市：{{routeInfo.city}}</text>
+      <text class="route-duration">时长：{{routeInfo.duration}}</text>
+    </view>
+    <view class="route-description">
+      <text>{{routeInfo.description}}</text>
+    </view>
+  </view>
+
+  <!-- 预约表单 -->
+  <view class="booking-form card">
+    <text class="section-title">预约信息</text>
+    
+    <!-- 日期选择 -->
+    <view class="form-item">
+      <text class="form-label">选择日期</text>
+      <picker mode="date" value="{{date}}" start="{{minDate}}" end="{{maxDate}}" bindchange="bindDateChange">
+        <view class="picker">
+          <text>{{date || '请选择日期'}}</text>
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+    
+    <!-- 人数选择 -->
+    <view class="form-item">
+      <text class="form-label">预约人数</text>
+      <view class="number-picker">
+        <view class="number-btn {{personCount <= 1 ? 'disabled' : ''}}" bindtap="decreaseCount">-</view>
+        <text class="number-value">{{personCount}}</text>
+        <view class="number-btn" bindtap="increaseCount">+</view>
+      </view>
+    </view>
+    
+    <!-- 联系信息 -->
+    <view class="form-item">
+      <text class="form-label">联系人</text>
+      <input class="input" placeholder="请输入联系人姓名" value="{{contactName}}" bindinput="inputContactName" />
+    </view>
+    
+    <view class="form-item">
+      <text class="form-label">联系电话</text>
+      <input class="input" type="number" placeholder="请输入联系电话" value="{{contactPhone}}" bindinput="inputContactPhone" />
+    </view>
+    
+    <!-- 备注信息 -->
+    <view class="form-item">
+      <text class="form-label">备注信息</text>
+      <textarea class="textarea" placeholder="请输入备注信息（选填）" value="{{remark}}" bindinput="inputRemark"></textarea>
+    </view>
+  </view>
+
+  <!-- 费用信息 -->
+  <view class="price-info card">
+    <text class="section-title">费用信息</text>
+    <view class="price-item">
+      <text>路线单价</text>
+      <text>¥{{routeInfo.price}}/人</text>
+    </view>
+    <view class="price-item">
+      <text>预约人数</text>
+      <text>{{personCount}}人</text>
+    </view>
+    <view class="divider"></view>
+    <view class="price-item total">
+      <text>总计</text>
+      <text class="total-price">¥{{totalPrice}}</text>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <button class="submit-btn" bindtap="submitBooking">提交预约</button>
+  </view>
+</view>

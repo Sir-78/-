@@ -1,0 +1,289 @@
+/**
+ * 宁高旅小程序全局样式
+ */
+
+/* 全局变量 */
+page {
+  --primary-color: #07c160;
+  --primary-light: #e8f7ef;
+  --secondary-color: #1296db;
+  --accent-color: #f5a623;
+  --text-color: #333333;
+  --text-color-light: #666666;
+  --text-color-lighter: #999999;
+  --background-color: #f8f8f8;
+  --border-color: #eeeeee;
+  --success-color: #07c160;
+  --warning-color: #f5a623;
+  --error-color: #e64340;
+  --shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 
+               Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 
+               'Microsoft Yahei', sans-serif;
+  font-size: 28rpx;
+  line-height: 1.5;
+  color: var(--text-color);
+  padding-bottom: calc(160rpx + env(safe-area-inset-bottom));
+  background-color: var(--background-color);
+}
+
+/* 通用容器 */
+.container {
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+/* 卡片样式 */
+.card {
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: var(--shadow);
+}
+
+/* 标题样式 */
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 16rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: var(--text-color-light);
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin: 30rpx 0 20rpx;
+  display: block;
+}
+
+/* 按钮样式 */
+.btn {
+  padding: 16rpx 32rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  text-align: center;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: #ffffff;
+}
+
+.btn-outline {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: transparent;
+}
+
+.btn-small {
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+}
+
+.btn-large {
+  padding: 20rpx 40rpx;
+  font-size: 32rpx;
+}
+
+/* 表单元素 */
+.input {
+  width: 100%;
+  height: 80rpx;
+  border: 1px solid var(--border-color);
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+}
+
+.textarea {
+  width: 100%;
+  height: 200rpx;
+  border: 1px solid var(--border-color);
+  border-radius: 8rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+}
+
+/* 列表样式 */
+.list {
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+
+.list-item {
+  padding: 24rpx;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+/* 标签样式 */
+.tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  border-radius: 6rpx;
+  font-size: 24rpx;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+/* 头像样式 */
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+}
+
+.avatar-large {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.avatar-small {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+/* 分隔线 */
+.divider {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 20rpx 0;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  color: var(--text-color-lighter);
+  padding: 20rpx 0;
+}
+
+/* 空状态 */
+.empty {
+  text-align: center;
+  padding: 60rpx 0;
+  color: var(--text-color-lighter);
+}
+
+/* 评分星星 */
+.stars {
+  display: flex;
+}
+
+.star {
+  font-size: 40rpx;
+  color: #ddd;
+  margin-right: 10rpx;
+}
+
+.star.active {
+  color: var(--accent-color);
+}
+
+/* 辅助类 */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.text-secondary {
+  color: var(--secondary-color);
+}
+
+.text-accent {
+  color: var(--accent-color);
+}
+
+.text-success {
+  color: var(--success-color);
+}
+
+.text-warning {
+  color: var(--warning-color);
+}
+
+.text-error {
+  color: var(--error-color);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.mt-10 {
+  margin-top: 10rpx;
+}
+
+.mt-20 {
+  margin-top: 20rpx;
+}
+
+.mb-10 {
+  margin-bottom: 10rpx;
+}
+
+.mb-20 {
+  margin-bottom: 20rpx;
+}
+
+.bottom-spacer {
+  height: 140rpx;
+}

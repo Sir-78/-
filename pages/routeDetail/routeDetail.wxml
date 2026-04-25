@@ -1,0 +1,56 @@
+<view class="container">
+  <!-- 路线基本信息 -->
+  <view class="route-header">
+    <text class="route-title">{{routeInfo.name}}</text>
+    <view class="route-meta">
+      <text class="route-city">所属城市：{{routeInfo.city}}</text>
+      <text class="route-duration">时长：{{routeInfo.duration}}</text>
+    </view>
+  </view>
+
+  <!-- 路线详情信息 -->
+  <view class="route-details">
+    <view class="detail-item">
+      <text class="detail-label">核心景点：</text>
+      <text class="detail-value">{{routeInfo.coreAttractions}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="detail-label">活动内容：</text>
+      <text class="detail-value">{{routeInfo.activities}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="detail-label">特色：</text>
+      <text class="detail-value">{{routeInfo.features}}</text>
+    </view>
+  </view>
+
+  <!-- 评分和评论区域 -->
+  <view class="rating-section">
+    <text class="section-title">评分与评论</text>
+    <view class="rating-stars">
+      <text>您的评分：</text>
+      <view class="stars">
+        <view class="star {{rating >= 1 ? 'active' : ''}}" bindtap="onRate" data-value="1">★</view>
+        <view class="star {{rating >= 2 ? 'active' : ''}}" bindtap="onRate" data-value="2">★</view>
+        <view class="star {{rating >= 3 ? 'active' : ''}}" bindtap="onRate" data-value="3">★</view>
+        <view class="star {{rating >= 4 ? 'active' : ''}}" bindtap="onRate" data-value="4">★</view>
+        <view class="star {{rating >= 5 ? 'active' : ''}}" bindtap="onRate" data-value="5">★</view>
+      </view>
+    </view>
+    <view class="comment-area">
+      <textarea placeholder="分享您的体验..." bindinput="onCommentInput" value="{{comment}}"></textarea>
+      <button class="submit-btn" bindtap="onSubmitComment">提交评论</button>
+    </view>
+  </view>
+
+  <!-- 相关路线推荐 -->
+  <view class="related-routes" wx:if="{{relatedRoutes.length > 0}}">
+    <text class="section-title">相关路线推荐</text>
+    <view class="route-list">
+      <view class="route-item" wx:for="{{relatedRoutes}}" wx:key="id" bindtap="navigateToRoute" data-id="{{item.id}}">
+        <text class="route-name">{{item.name}}</text>
+        <text class="route-brief">{{item.brief}}</text>
+      </view>
+    </view>
+  </view>
+</view>

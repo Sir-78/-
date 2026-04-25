@@ -1,0 +1,51 @@
+<view class="container">
+  <view class="header">
+    <text class="title">旅行社区</text>
+    <text class="subtitle">分享您的旅行体验</text>
+  </view>
+
+  <view class="new-post-btn" bindtap="navigateToNewPost">
+    <text>发布新帖</text>
+  </view>
+
+  <view class="post-list">
+    <view class="post-item" wx:for="{{posts}}" wx:key="id" bindtap="navigateToPost" data-id="{{item.id}}">
+      <view class="post-header">
+        <image class="avatar" src="{{item.avatar}}"></image>
+        <view class="user-info">
+          <text class="username">{{item.author}}</text>
+          <text class="post-time">{{item.time}}</text>
+        </view>
+      </view>
+      
+      <view class="post-content">
+        <text>{{item.content}}</text>
+      </view>
+      
+      <view class="post-images" wx:if="{{item.images.length > 0}}">
+        <image 
+          wx:for="{{item.images}}" 
+          wx:for-item="image" 
+          wx:key="*this" 
+          src="{{image}}" 
+          mode="aspectFill"
+          class="post-image {{item.images.length == 1 ? 'single-image' : ''}}"
+        ></image>
+      </view>
+      
+      <view class="post-footer">
+        <view class="interaction">
+          <view class="like">
+            <text class="icon">👍</text>
+            <text class="count">{{item.likes}}</text>
+          </view>
+          <view class="comment">
+            <text class="icon">💬</text>
+            <text class="count">{{item.comments}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+</view>

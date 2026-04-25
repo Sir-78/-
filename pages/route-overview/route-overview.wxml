@@ -1,0 +1,89 @@
+<view class="container">
+  <view class="header">
+    <text class="title">宁夏旅游路线分类总览</text>
+    <text class="subtitle">共6大类别，20条精选路线</text>
+  </view>
+
+  <!-- 路线地图与筛选 -->
+  <view class="map-section">
+    <map class="route-map" latitude="{{mapCenter.latitude}}" longitude="{{mapCenter.longitude}}" scale="{{mapScale}}" markers="{{mapMarkers}}" show-location="false" bindmarkertap="onMarkerTap"></map>
+    <view class="map-actions">
+      <button class="btn-primary" size="mini" bindtap="locateMe">定位我</button>
+    </view>
+    <view class="map-filter">
+      <view class="filter-chip {{selectedMapCategory==='all'?'active':''}}" bindtap="setMapCategoryFilter" data-cat="all">全部</view>
+      <view class="filter-chip {{selectedMapCategory===item?'active':''}}" wx:for="{{categories}}" wx:key="*this" bindtap="setMapCategoryFilter" data-cat="{{item}}">{{item}}</view>
+    </view>
+  </view>
+
+  <view class="category-list">
+    <view class="category-card {{item.id}}" wx:for="{{routeCategories}}" wx:key="id" bindtap="navigateToCategory" data-id="{{item.id}}">
+      <view class="category-header">
+        <text class="category-name">{{item.category}}</text>
+        <text class="category-count">{{item.count}}条路线</text>
+      </view>
+      
+      <view class="category-content">
+        <view class="content-section">
+          <text class="section-title">核心景点</text>
+          <view class="tag-list">
+            <text class="tag" wx:for="{{item.coreAttractions}}" wx:key="*this" wx:for-item="attraction">{{attraction}}</text>
+          </view>
+        </view>
+        
+        <view class="content-section">
+          <text class="section-title">特色活动</text>
+          <view class="tag-list">
+            <text class="tag" wx:for="{{item.featuredActivities}}" wx:key="*this" wx:for-item="activity">{{activity}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 路线详情列表，根据选择的类别显示 -->
+  <view class="route-list" wx:if="{{selectedCategory}}">
+    <view class="route-list-header">
+      <text class="route-list-title">{{selectedCategory.category}}路线列表</text>
+    </view>
+    
+    <view class="route-item" wx:for="{{selectedCategory.routes}}" wx:key="id" bindtap="navigateToRouteDetail" data-id="{{item.id}}">
+      <view class="route-item-header">
+        <text class="route-name">{{item.name}}</text>
+        <text class="route-duration">{{item.duration}}</text>
+      </view>
+      <view class="route-item-content">
+        <view class="route-info">
+          <text class="info-label">所属城市：</text>
+          <text class="info-value">{{item.city}}</text>
+        </view>
+        <view class="route-info">
+          <text class="info-label">核心景点：</text>
+          <text class="info-value">{{item.coreAttractions}}</text>
+        </view>
+        <view class="route-info">
+          <text class="info-label">特色：</text>
+          <text class="info-value">{{item.features}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 选中标记的路线摘要弹层 -->
+  <view class="route-summary" wx:if="{{selectedRouteSummary}}" bindtap="closeSummary">
+    <view class="summary-card" catchtap="noop">
+      <text class="summary-title">{{selectedRouteSummary.name}}</text>
+      <text class="cat-tag cat-{{selectedRouteSummary.categoryKey}}">{{selectedRouteSummary.category || '类别'}}</text>
+      <view class="summary-meta">
+        <text class="meta-item">城市：{{selectedRouteSummary.city || '未知'}}</text>
+        <text class="meta-item">时长：{{selectedRouteSummary.duration || '—'}}</text>
+      </view>
+      <text class="summary-desc">{{selectedRouteSummary.features || '—'}}</text>
+      <view class="summary-actions">
+        <button class="btn-primary" bindtap="navigateToRouteDetail" data-id="{{selectedRouteSummary._id || selectedRouteSummary.id}}">查看详情</button>
+        <button class="btn-secondary" bindtap="closeSummary">关闭</button>
+      </view>
+    </view>
+  </view>
+  
+</view>

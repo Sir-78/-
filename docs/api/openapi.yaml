@@ -1,0 +1,467 @@
+openapi: 3.0.3
+info:
+  title: 宁夏文旅体育小程序 后端API
+  version: 1.0.0
+  description: 基于 Spring Boot 的微信小程序后端接口规范（离线优先，可插拔云同步）
+servers:
+  - url: https://api.example.com
+    description: 生产环境
+  - url: http://localhost:8080
+    description: 本地开发
+tags:
+  - name: routes
+    description: 路线
+  - name: bookings
+    description: 预约
+  - name: posts
+    description: 帖子
+  - name: comments
+    description: 评论
+  - name: stats
+    description: 统计
+  - name: points
+    description: 积分
+paths:
+  /api/routes:
+    get:
+      tags: [routes]
+      summary: 路线列表
+      parameters:
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: page
+          schema: { type: integer, default: 0 }
+        - in: query
+          name: size
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: array
+                    items: { $ref: '#/components/schemas/Route' }
+                  page: { type: integer }
+                  size: { type: integer }
+                  total: { type: integer }
+  /api/routes/{id}:
+    get:
+      tags: [routes]
+      summary: 路线详情
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Route' }
+        '404': { description: Not Found }
+  /api/bookings:
+    get:
+      tags: [bookings]
+      summary: 预约列表
+      parameters:
+        - in: query
+          name: routeId
+          schema: { type: string }
+        - in: query
+          name: status
+          schema: { type: string, enum: [进行中, 已完成, 取消] }
+        - in: query
+          name: start
+          schema: { type: integer, description: 毫秒时间戳 }
+        - in: query
+          name: end
+          schema: { type: integer, description: 毫秒时间戳 }
+        - in: query
+          name: page
+          schema: { type: integer, default: 0 }
+        - in: query
+          name: size
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: array
+                    items: { $ref: '#/components/schemas/Booking' }
+                  page: { type: integer }
+                  size: { type: integer }
+                  total: { type: integer }
+    post:
+      tags: [bookings]
+      summary: 创建预约
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/BookingCreate' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Booking' }
+  /api/bookings/{id}:
+    put:
+      tags: [bookings]
+      summary: 更新预约（状态/评分）
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status: { type: string, enum: [进行中, 已完成, 取消] }
+                rating: { type: integer, minimum: 0, maximum: 5 }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Booking' }
+    delete:
+      tags: [bookings]
+      summary: 删除预约
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '204': { description: No Content }
+  /api/posts:
+    get:
+      tags: [posts]
+      summary: 帖子列表
+      parameters:
+        - in: query
+          name: user
+          schema: { type: string }
+        - in: query
+          name: page
+          schema: { type: integer, default: 0 }
+        - in: query
+          name: size
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: array
+                    items: { $ref: '#/components/schemas/Post' }
+                  page: { type: integer }
+                  size: { type: integer }
+                  total: { type: integer }
+    post:
+      tags: [posts]
+      summary: 创建帖子
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PostCreate' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Post' }
+  /api/posts/{id}:
+    put:
+      tags: [posts]
+      summary: 更新帖子
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PostUpdate' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Post' }
+    delete:
+      tags: [posts]
+      summary: 删除帖子
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '204': { description: No Content }
+  /api/posts/{id}/comments:
+    get:
+      tags: [comments]
+      summary: 评论列表
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Comment' }
+    post:
+      tags: [comments]
+      summary: 添加评论
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CommentCreate' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Comment' }
+  /api/comments/{id}:
+    delete:
+      tags: [comments]
+      summary: 删除评论
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '204': { description: No Content }
+  /api/stats/summary:
+    get:
+      tags: [stats]
+      summary: 摘要统计
+      parameters:
+        - in: query
+          name: range
+          schema: { type: string, enum: [day, week, month, year, custom, all], default: month }
+        - in: query
+          name: start
+          schema: { type: integer }
+        - in: query
+          name: end
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Summary' }
+  /api/stats/popular:
+    get:
+      tags: [stats]
+      summary: 热门路线排行
+      parameters:
+        - in: query
+          name: range
+          schema: { type: string, enum: [day, week, month, year, custom, all], default: month }
+        - in: query
+          name: start
+          schema: { type: integer }
+        - in: query
+          name: end
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/PopularRoute' }
+  /api/points:
+    get:
+      tags: [points]
+      summary: 积分总览与历史
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PointsOverview' }
+  /api/points/events:
+    post:
+      tags: [points]
+      summary: 记录积分变动事件
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                delta: { type: integer }
+                reason: { type: string }
+      responses:
+        '201': { description: Created }
+components:
+  schemas:
+    Route:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        viewCount: { type: integer }
+        lat: { type: number }
+        lng: { type: number }
+        coverUrl: { type: string }
+    Booking:
+      type: object
+      properties:
+        id: { type: string }
+        routeId: { type: string }
+        routeName: { type: string }
+        status: { type: string, enum: [进行中, 已完成, 取消] }
+        rating: { type: integer }
+        date: { type: integer, description: 毫秒时间戳 }
+        sourceType: { type: string }
+        sourceId: { type: string }
+    BookingCreate:
+      type: object
+      required: [routeId, routeName, date]
+      properties:
+        routeId: { type: string }
+        routeName: { type: string }
+        status: { type: string, enum: [进行中, 已完成, 取消], default: 进行中 }
+        rating: { type: integer, default: 0 }
+        date: { type: integer }
+        sourceType: { type: string }
+        sourceId: { type: string }
+    Post:
+      type: object
+      properties:
+        id: { type: string }
+        type: { type: string, enum: [normal, booking], default: normal }
+        content: { type: string }
+        images:
+          type: array
+          items: { type: string }
+        location:
+          type: object
+          properties:
+            latitude: { type: number }
+            longitude: { type: number }
+            name: { type: string }
+        date: { type: integer }
+        likes: { type: integer }
+    PostCreate:
+      type: object
+      required: [content, date]
+      properties:
+        type: { type: string, enum: [normal, booking], default: normal }
+        content: { type: string }
+        images:
+          type: array
+          items: { type: string }
+        location:
+          type: object
+          properties:
+            latitude: { type: number }
+            longitude: { type: number }
+            name: { type: string }
+        date: { type: integer }
+    PostUpdate:
+      type: object
+      properties:
+        content: { type: string }
+        images:
+          type: array
+          items: { type: string }
+        location:
+          type: object
+          properties:
+            latitude: { type: number }
+            longitude: { type: number }
+            name: { type: string }
+    Comment:
+      type: object
+      properties:
+        id: { type: string }
+        postId: { type: string }
+        content: { type: string }
+        authorInfo:
+          type: object
+          properties:
+            nickName: { type: string }
+            avatarUrl: { type: string }
+        ts: { type: integer }
+    CommentCreate:
+      type: object
+      required: [content]
+      properties:
+        content: { type: string }
+    Summary:
+      type: object
+      properties:
+        totalRoutes: { type: integer }
+        totalBookings: { type: integer }
+        completedBookings: { type: integer }
+        averageRating: { type: number }
+        totalPosts: { type: integer }
+        pointsDelta: { type: integer }
+    PopularRoute:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        bookingCount: { type: integer }
+        completedCount: { type: integer }
+        averageRating: { type: number }
+        viewCount: { type: integer }
+        score: { type: number }
+    PointsOverview:
+      type: object
+      properties:
+        total: { type: integer }
+        history:
+          type: array
+          items:
+            type: object
+            properties:
+              ts: { type: integer }
+              delta: { type: integer }
+              reason: { type: string }

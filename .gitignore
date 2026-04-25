@@ -1,0 +1,21 @@
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE
+.idea/
+.vscode/
+
+# WeChat Mini Program private config
+project.private.config.json
+
+# Node dependencies
+node_modules/
+cloudfunctions/*/node_modules/
+
+# Java / Maven build output
+backend/target/
+*.class
+
+# Generated reports
+report/
